@@ -718,15 +718,16 @@ section {
 
 .marquee-track img {
     height: 300px;
-    width: 400px;
+    width: auto;
     object-fit: cover;
-    border-radius: 0.5rem;
-    filter: grayscale(0.5);
-    transition: 0.4s;
+    border-radius: 1rem;
+    filter: none;
+    opacity: 0.85;
+    transition: all 0.5s ease;
 }
 
 .marquee-track img:hover {
-    filter: grayscale(0);
+    opacity: 1;
     transform: scale(1.05);
 }
 
