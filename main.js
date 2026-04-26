@@ -225,22 +225,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const extractName = (input) => {
         let text = input.trim();
-        // Remove common prefixes
         const prefixes = ["con ", "soy ", "me llamo ", "hola, soy ", "hola ", "buenas, soy ", "buenas "];
         let lowerText = text.toLowerCase();
-        
         for (const prefix of prefixes) {
             if (lowerText.startsWith(prefix)) {
                 text = text.slice(prefix.length).trim();
                 break;
             }
         }
-        
-        // Capitalize first letter
-        if (text.length > 0) {
-            return text.charAt(0).toUpperCase() + text.slice(1);
+        return text.charAt(0).toUpperCase() + text.slice(1);
+    };
+
+    const extractEntity = (input) => {
+        let text = input.trim();
+        const prefixes = ["de un ", "de una ", "del ", "de ", "soy de ", "es un ", "es una ", "somos de ", "desde "];
+        let lowerText = text.toLowerCase();
+        for (const prefix of prefixes) {
+            if (lowerText.startsWith(prefix)) {
+                text = text.slice(prefix.length).trim();
+                break;
+            }
         }
-        return text;
+        return text.charAt(0).toUpperCase() + text.slice(1);
+    };
+
+    const detectDate = (input) => {
+        const dateRegex = /(\d{1,2}[\/\-\.]\d{1,2}(\d{2,4})?)|(\d{1,2}\s+de\s+[a-z]{3,10})/i;
+        const match = input.match(dateRegex);
+        return match ? match[0] : null;
     };
 
     const handleStep = () => {
@@ -255,20 +267,27 @@ document.addEventListener('DOMContentLoaded', () => {
             currentStep = 1;
             showBotMessage(`¡Encantado de conocerte, ${userData.name}! ¿De parte de qué local, ayuntamiento o empresa nos escribes?`);
         } else if (currentStep === 1) {
-            userData.entity = input;
+            userData.entity = extractEntity(input);
             currentStep = 2;
-            showBotMessage(`Perfecto. ¿En qué podemos ayudarte desde ${userData.entity}? (Presupuesto, disponibilidad, info general...)`);
+            showBotMessage(`Perfecto. ¿En qué podemos ayudarte desde ${userData.entity}? (Presupuesto, disponibilidad para una fecha, info general...)`);
         } else if (currentStep === 2) {
             userData.purpose = input;
+            const foundDate = detectDate(input);
+            if (foundDate) userData.date = foundDate;
+            
             showBotMessage("¡Genial! Te redirijo ahora mismo a nuestro WhatsApp para concretar los detalles.");
             
-            const finalMsg = `Hola! Soy ${userData.name} de ${userData.entity}. Me pongo en contacto con vosotros para: ${userData.purpose}`;
+            let finalMsg = `Hola! Soy ${userData.name} de ${userData.entity}. Me pongo en contacto con vosotros para: ${userData.purpose}`;
+            if (userData.date) {
+                finalMsg += `. Me interesa especialmente para la fecha: ${userData.date}`;
+            }
             
             setTimeout(() => {
                 window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(finalMsg)}`, '_blank');
                 waModal.classList.remove('active');
                 // Reset for next time
                 currentStep = 0;
+                userData.name = ''; userData.entity = ''; userData.purpose = ''; userData.date = '';
                 waChatBody.innerHTML = '';
             }, 1500);
         }
