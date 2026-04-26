@@ -238,8 +238,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const extractEntity = (input) => {
         let text = input.trim();
-        const prefixes = ["de un ", "de una ", "del ", "de ", "soy de ", "es un ", "es una ", "somos de ", "desde "];
+        const prefixes = [
+            "soy de un ", "soy de una ", "soy del ", "soy de ", 
+            "somos de un ", "somos de una ", "somos del ", "somos de ",
+            "de un ", "de una ", "del ", "desde el ", "desde la ", "desde ", 
+            "es un ", "es una ", "es del ", "es de ", "de "
+        ];
         let lowerText = text.toLowerCase();
+        
+        // Sort prefixes by length descending to match longest first
+        prefixes.sort((a, b) => b.length - a.length);
+
         for (const prefix of prefixes) {
             if (lowerText.startsWith(prefix)) {
                 text = text.slice(prefix.length).trim();
