@@ -223,6 +223,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     };
 
+    const extractName = (input) => {
+        let text = input.trim();
+        // Remove common prefixes
+        const prefixes = ["con ", "soy ", "me llamo ", "hola, soy ", "hola ", "buenas, soy ", "buenas "];
+        let lowerText = text.toLowerCase();
+        
+        for (const prefix of prefixes) {
+            if (lowerText.startsWith(prefix)) {
+                text = text.slice(prefix.length).trim();
+                break;
+            }
+        }
+        
+        // Capitalize first letter
+        if (text.length > 0) {
+            return text.charAt(0).toUpperCase() + text.slice(1);
+        }
+        return text;
+    };
+
     const handleStep = () => {
         const input = waCustomInput.value.trim();
         if (!input) return;
@@ -231,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         waCustomInput.value = '';
 
         if (currentStep === 0) {
-            userData.name = input;
+            userData.name = extractName(input);
             currentStep = 1;
             showBotMessage(`¡Encantado de conocerte, ${userData.name}! ¿De parte de qué local, ayuntamiento o empresa nos escribes?`);
         } else if (currentStep === 1) {
