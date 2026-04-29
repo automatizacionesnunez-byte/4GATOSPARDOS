@@ -713,7 +713,9 @@ section {
 .marquee-track {
     display: flex;
     gap: 2rem;
-    animation: marquee 40s linear infinite;
+    animation: marquee 60s linear infinite;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 .marquee-track img {
@@ -733,7 +735,7 @@ section {
 
 @keyframes marquee {
     0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-400px * 5 - 2rem * 5)); }
+    100% { transform: translateX(-50%); }
 }
 
 /* Contact */
