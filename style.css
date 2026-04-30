@@ -713,7 +713,7 @@ section {
 .marquee-track {
     display: flex;
     gap: 2rem;
-    animation: marquee 60s linear infinite;
+    animation: marquee 40s linear infinite; /* Increased speed (from 60s to 40s) */
     will-change: transform;
     transform: translate3d(0, 0, 0);
 }
@@ -1186,12 +1186,8 @@ section {
     
     .marquee-track img {
         height: 200px;
-        width: 300px;
-    }
-    
-    @keyframes marquee {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(calc(-300px * 7 - 2rem * 7)); }
+        width: auto; /* Changed to auto to preserve aspect ratio */
+        min-width: 250px; /* Ensure a minimum size on mobile */
     }
 }
 
