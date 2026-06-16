@@ -1241,3 +1241,135 @@ section {
         bottom: 85px;
     }
 }
+
+
+/* ==========================================
+   CHRISTMAS SECTION
+   ========================================== */
+.christmas {
+    padding: 7rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.christmas-card {
+    background: linear-gradient(135deg, var(--color-bg-card) 0%, rgba(20, 14, 2, 0.95) 100%);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 2rem;
+    padding: 5rem 3rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(201, 168, 76, 0.1);
+    transition: all 0.5s ease;
+}
+
+.christmas-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+        radial-gradient(circle at 10% 20%, rgba(201, 168, 76, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(201, 168, 76, 0.06) 0%, transparent 40%);
+    pointer-events: none;
+    border-radius: 2rem;
+}
+
+.christmas-card:hover {
+    border-color: rgba(201, 168, 76, 0.6);
+    box-shadow: 0 20px 60px rgba(201, 168, 76, 0.15), inset 0 1px 0 rgba(201, 168, 76, 0.2);
+    transform: translateY(-4px);
+}
+
+.christmas-ornaments {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 1.8rem;
+    opacity: 0.7;
+}
+
+.ornament {
+    display: inline-block;
+    animation: sway 3s ease-in-out infinite;
+}
+
+.ornament:nth-child(1) { animation-delay: 0s; }
+.ornament:nth-child(2) { animation-delay: 0.3s; }
+.ornament:nth-child(3) { animation-delay: 0.6s; }
+.ornament:nth-child(4) { animation-delay: 0.9s; }
+.ornament:nth-child(5) { animation-delay: 1.2s; }
+.ornament:nth-child(6) { animation-delay: 1.5s; }
+
+@keyframes sway {
+    0%, 100% { transform: rotate(-8deg) translateY(0); }
+    50% { transform: rotate(8deg) translateY(-5px); }
+}
+
+.christmas-content {
+    position: relative;
+    z-index: 1;
+}
+
+.christmas-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-gold);
+    margin-bottom: 2rem;
+    font-style: italic;
+    font-family: var(--font-title);
+}
+
+.christmas-text {
+    max-width: 780px;
+    margin: 0 auto 1.5rem;
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    line-height: 1.85;
+}
+
+.christmas-features {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 3rem auto;
+    flex-wrap: wrap;
+    max-width: 700px;
+}
+
+.christmas-feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+}
+
+.christmas-feature span {
+    font-size: 2rem;
+    display: block;
+}
+
+.christmas-feature p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    font-weight: 500;
+    max-width: 140px;
+}
+
+@media (max-width: 768px) {
+    .christmas-card {
+        padding: 3rem 1.5rem;
+        border-radius: 1rem;
+    }
+
+    .christmas-features {
+        gap: 2rem;
+    }
+
+    .christmas-ornaments {
+        font-size: 1.4rem;
+        gap: 1rem;
+    }
+}
